@@ -142,5 +142,3 @@ See `tasks/tutorial/computational_graph/README.md` for the tutorial narrative an
 ## Paper Settings
 
 The public entry points expose only the TRACE encoder. Task-level Lightning modules are named `TRACETrainer` and live in `trace_trainer.py`, while the encoder is exposed as `TRACE` through `trace_encoder.py`. The paper reports contrastive retrieval with Rec@1/5/10 on RTL, AIG, and PM netlists, and predictive MAE/R2 on AIG and PM netlists. See `checkpoints/README.md` for the checkpoint naming convention used for each setting.
-
-See `REPRODUCIBILITY.md` for the paper target metrics and the current reproduction status.
