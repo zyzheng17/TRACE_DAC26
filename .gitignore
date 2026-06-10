@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store
+
+# Training output
+lightning_logs/
+AIG_logs/
+logs/
+wandb/
+
+# Large generated datasets/artifacts
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.npz
+*.npy
+*.csv
+*.log
+tmp/
+work/
+
+# Keep checkpoint documentation, ignore large weights by extension.
+!checkpoints/
+!checkpoints/README.md

@@ -1,0 +1,6 @@
+["spi", 
+              "b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10",
+              "b11", "b12", "b13", "b14", "b15", "b17", "b18", "b19", "b20",
+              "b21", "b22",
+              "fpu", "i2c_master_top", "mc_top", "pcm_slv_top" , "sasc_top", "simple_spi_top", "tv80s", "usb_phy", "usbf_top", "wb_dma_top"
+              ]

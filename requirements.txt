@@ -1,0 +1,16 @@
+torch
+torchvision
+torch-geometric
+torch-scatter
+pytorch-lightning
+dgl
+numpy
+scipy
+scikit-learn
+networkx
+aiger
+info-nce-pytorch
+einops
+matplotlib
+ply
+jinja2
