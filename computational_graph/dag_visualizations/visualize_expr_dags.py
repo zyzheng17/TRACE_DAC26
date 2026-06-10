@@ -118,7 +118,7 @@ def draw_node(ax, xy, label, color, is_output=False):
     )
 
 
-def draw_edge(ax, start, end, input_idx, rad):
+def draw_edge(ax, start, end, position_idx, rad):
     arrow = FancyArrowPatch(
         start,
         end,
@@ -138,7 +138,7 @@ def draw_edge(ax, start, end, input_idx, rad):
     ax.text(
         mx,
         my,
-        f"input {input_idx}",
+        f"position {position_idx}",
         ha="center",
         va="center",
         fontsize=8,
@@ -207,6 +207,7 @@ def render_expression(expr_name, output_dir):
     png_path = output_dir / f"{expr_name}.png"
     fig.savefig(png_path, bbox_inches="tight")
     plt.close(fig)
+    png_path.chmod(0o644)
     return png_path
 
 
@@ -222,7 +223,7 @@ def write_gallery(output_dir, rendered):
             [
                 f"## `{expr_name}`",
                 "",
-                f"![{expr_name}]({png_path.name})",
+                f'<img src="./{png_path.name}" alt="{expr_name}" width="900">',
                 "",
                 f"- PNG: `{png_path.name}`",
                 "",

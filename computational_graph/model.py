@@ -14,7 +14,7 @@ class TRACEComputationalGraph(nn.Module):
         self.max_arity = max_arity
         self.type_embedding = nn.Embedding(len(NODE_TYPES), hidden)
         self.value_embedding = nn.Embedding(p, hidden)
-        self.slot_embedding = nn.Embedding(max_arity + 1, hidden)
+        self.position_embedding = nn.Embedding(max_arity + 1, hidden)
         layer = nn.TransformerEncoderLayer(
             d_model=hidden,
             nhead=num_heads,
@@ -62,12 +62,13 @@ class TRACEComputationalGraph(nn.Module):
                 level_trace.append({
                     'target': target,
                     'sources': source_nodes.detach().cpu().tolist(),
-                    'slots': batch.edge_pos[edge_ids[:arity]].detach().cpu().tolist(),
+                    'positions': batch.edge_pos[edge_ids[:arity]].detach().cpu().tolist(),
+                    'sequence_nodes': [target] + source_nodes.detach().cpu().tolist(),
                 })
 
-            slots = torch.arange(self.max_arity + 1, device=device)
+            positions = torch.arange(self.max_arity + 1, device=device)
             encoded = self.operator_encoder(
-                sequence + self.slot_embedding(slots).unsqueeze(0),
+                sequence + self.position_embedding(positions).unsqueeze(0),
                 src_key_padding_mask=padding_mask,
             )
             h_next[target_nodes] = encoded[:, 0]

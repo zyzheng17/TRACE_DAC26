@@ -40,28 +40,64 @@ def print_graph(data):
 
     print('\nEdges:')
     for edge_idx, (src, dst) in enumerate(data.edge_index.t().tolist()):
-        slot = int(data.edge_pos[edge_idx])
-        print(f'  e{edge_idx}: v{src} -> v{dst} slot={slot}')
+        position = int(data.edge_pos[edge_idx])
+        print(f'  e{edge_idx}: v{src} -> v{dst} position={position}')
 
 
 def print_model(model):
     print('\n== TRACE Encoder ==')
     print(f'type_embedding: {tuple(model.type_embedding.weight.shape)}')
     print(f'value_embedding: {tuple(model.value_embedding.weight.shape)}')
-    print(f'slot_embedding: {tuple(model.slot_embedding.weight.shape)}')
+    print(f'position_embedding: {tuple(model.position_embedding.weight.shape)}')
     print(f'operator_encoder_layers: {len(model.operator_encoder.layers)}')
     print(f'hidden_dim: {model.hidden}')
     print('readout: output-node embedding -> scalar prediction in [0, 1]')
 
 
-def print_forward_trace(trace):
+def _parenthesize_for_mul(expr):
+    return f'({expr})' if ' + ' in expr or ' - ' in expr or ' mod ' in expr else expr
+
+
+def _format_semantic(node_type, operands):
+    if node_type == 'ADD':
+        return ' + '.join(operands)
+    if node_type == 'SUB':
+        return ' - '.join(operands)
+    if node_type == 'MUL':
+        return '*'.join(_parenthesize_for_mul(operand) for operand in operands)
+    if node_type == 'MOD':
+        return f'{operands[0]} mod p'
+    return f"{node_type}({', '.join(operands)})"
+
+
+def build_node_semantics(data):
+    semantics = {}
+    for node_idx in torch.argsort(data.forward_level).tolist():
+        node_type = ID_TO_NODE_TYPE[int(data.node_type[node_idx])]
+        if node_type == 'IN_X':
+            semantics[node_idx] = 'x'
+            continue
+        if node_type == 'IN_Y':
+            semantics[node_idx] = 'y'
+            continue
+
+        edge_ids = (data.edge_index[1] == node_idx).nonzero(as_tuple=True)[0]
+        edge_ids = edge_ids[torch.argsort(data.edge_pos[edge_ids])]
+        operands = [semantics[int(data.edge_index[0, edge_idx])] for edge_idx in edge_ids]
+        semantics[node_idx] = _format_semantic(node_type, operands)
+    return semantics
+
+
+def print_forward_trace(trace, semantics):
     print('\n== Forward Flow ==')
     for item in trace:
         print(f"Level {item['level']}: Transformer input shape {item['sequence_shape']}")
         for op in item['operators']:
             sources = ', '.join(f"v{s}" for s in op['sources'])
-            slots = ', '.join(str(s) for s in op['slots'])
-            print(f"  target v{op['target']} receives [{sources}] at slots [{slots}]")
+            positions = ', '.join(str(s) for s in op['positions'])
+            sequence = ', '.join(f"v{s}" for s in op['sequence_nodes'])
+            semantic = semantics[op['target']]
+            print(f"  target v{op['target']} receives [{sources}] at positions [{positions}], prefix sequence [{sequence}], computation: v{op['target']}={semantic}")
 
 
 def main():
@@ -97,14 +133,7 @@ def main():
     with torch.no_grad():
         pred, trace = model(batch, return_trace=True)
 
-    print_forward_trace(trace)
-
-    pred_value = float(pred.item() * (args.p - 1))
-    print('\n== Output ==')
-    print(f'untrained_model_prediction_normalized: {float(pred.item()):.4f}')
-    print(f'untrained_model_prediction_value: {pred_value:.2f}')
-    print(f'ground_truth_value: {target}')
-    print('\nNote: this tutorial runs one forward pass with random weights. It demonstrates TRACE architecture and data flow, not trained accuracy.')
+    print_forward_trace(trace, build_node_semantics(data))
 
 
 if __name__ == '__main__':

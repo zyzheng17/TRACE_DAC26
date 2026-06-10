@@ -19,8 +19,8 @@ def _data(expr_name, node_types, edges, output_node_idx):
     edge_pos = torch.zeros(edge_index.size(1), dtype=torch.long)
     for target in range(len(node_types)):
         target_edges = (edge_index[1] == target).nonzero(as_tuple=True)[0]
-        for slot, edge_idx in enumerate(target_edges):
-            edge_pos[edge_idx] = slot
+        for position, edge_idx in enumerate(target_edges):
+            edge_pos[edge_idx] = position
 
     return Data(
         node_type=torch.tensor(node_types, dtype=torch.long),

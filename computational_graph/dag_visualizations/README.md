@@ -4,48 +4,48 @@ Each expression is rendered as an independent directed acyclic graph. Edge label
 
 ## `add`
 
-![add](add.png)
+<img src="./add.png" alt="add" width="900">
 
 - PNG: `add.png`
 
 ## `sub`
 
-![sub](sub.png)
+<img src="./sub.png" alt="sub" width="900">
 
 - PNG: `sub.png`
 
 ## `xy`
 
-![xy](xy.png)
+<img src="./xy.png" alt="xy" width="900">
 
 - PNG: `xy.png`
 
 ## `x2_y2`
 
-![x2_y2](x2_y2.png)
+<img src="./x2_y2.png" alt="x2_y2" width="900">
 
 - PNG: `x2_y2.png`
 
 ## `x2_xy_y2`
 
-![x2_xy_y2](x2_xy_y2.png)
+<img src="./x2_xy_y2.png" alt="x2_xy_y2" width="900">
 
 - PNG: `x2_xy_y2.png`
 
 ## `x2_xy_y2_x`
 
-![x2_xy_y2_x](x2_xy_y2_x.png)
+<img src="./x2_xy_y2_x.png" alt="x2_xy_y2_x" width="900">
 
 - PNG: `x2_xy_y2_x.png`
 
 ## `x3_xy`
 
-![x3_xy](x3_xy.png)
+<img src="./x3_xy.png" alt="x3_xy" width="900">
 
 - PNG: `x3_xy.png`
 
 ## `x3_xy2_y`
 
-![x3_xy2_y](x3_xy2_y.png)
+<img src="./x3_xy2_y.png" alt="x3_xy2_y" width="900">
 
 - PNG: `x3_xy2_y.png`
