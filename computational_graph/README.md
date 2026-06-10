@@ -14,9 +14,6 @@ The paper overview figures are included below.
 
 ![Computational graph overview](assets/overview.png)
 
-![Simple compute graph](assets/compute_graph.png)
-
-![Computational graph task types](assets/tasks.png)
 
 In this tutorial, a graph might represent:
 
