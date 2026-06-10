@@ -2,8 +2,6 @@
 
 This tutorial is a small, self-contained setting for understanding TRACE's core idea on computational graphs.
 
-It is adapted from the modular-expression experiments in `Expression_GNN/` and the computational-graph position paper in `computational_graph_icml26/`. To keep the setting minimal, we only use addition, subtraction, multiplication, and a final modulo node. There is no division, conditional branch, inverse operator, or external EDA dependency.
-
 ## What Is A Computational Graph?
 
 A computational graph is a directed graph `G = (V, E)` where:
