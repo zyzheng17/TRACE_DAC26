@@ -3,9 +3,8 @@
 This task trains TRACE on paired PM netlist graphs.
 
 ```bash
-cd src
 python train.py \
-  --data_path ../../../../data/pm_netlist/<prefix> \
+  --data_path ../../../data/pm_netlist/<prefix> \
   --use_cpu
 ```
 

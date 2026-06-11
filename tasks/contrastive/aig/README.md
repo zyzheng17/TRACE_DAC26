@@ -3,9 +3,8 @@
 This task trains TRACE on paired AIG graphs, such as original and synthesized AIG variants.
 
 ```bash
-cd src
 python train.py \
-  --data_path ../../../../data/aig/<prefix> \
+  --data_path ../../../data/aig/<prefix> \
   --use_cpu
 ```
 
