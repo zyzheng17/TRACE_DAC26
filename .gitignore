@@ -22,6 +22,6 @@ wandb/
 tmp/
 work/
 
-# Keep checkpoint documentation, ignore large weights by extension.
+# Allow committing checkpoints despite the global artifact extensions above.
 !checkpoints/
-!checkpoints/README.md
+!checkpoints/**
