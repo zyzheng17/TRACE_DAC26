@@ -33,11 +33,8 @@ Tasks:
 - `tasks/predictive/pm`: post-mapping logic-1 probability prediction
 
 Tutorial:
-- `tasks/tutorial/computational_graph`: minimal computational-graph example
+- `computational_graph`: minimal computational-graph example
 
-Large training artifacts should stay out of git. Keep downloaded or generated
-datasets under `data/`; the largest contrastive `.pt` files can be symlinked to
-external storage when local disk space is limited.
 
 ## Setup
 
